@@ -1,0 +1,21 @@
+sudo apt update -y
+
+sudo apt install python3-pip -y
+python3 -m venv venv
+apt install python3.10-venv -y
+mkdir -p /root/app
+cd /root/app
+sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10-venv
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r /root/app/quiz-dashboard/requirements.txt
+source /root/quiz-dashboard/venv/bin/activate
+pip install flask
+
+sudo apt install pkg-config libmysqlclient-dev
+pip install Flask-Cors==3.0.10
+pip install Flask-SQLAlchemy
+pip install Flask-Login
+pip install Flask-Migrate
+pip install mysqlclient
