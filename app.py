@@ -6,6 +6,8 @@ from flask_migrate import Migrate  # Import Migrate
 from flask_login import login_required, current_user
 from flask_login import LoginManager, login_required, current_user
 from config import Config
+import logging
+from logging.handlers import RotatingFileHandler
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -140,6 +142,22 @@ def submit_quiz():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+if __name__ == '__main__':
+    # Create a handler for writing log messages to a file
+    handler = RotatingFileHandler('/root/app/app.log', maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.INFO)  # Set logging level to INFO
+
+    # Create a formatter that specifies the log message format
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    # Add the handler to the Flask app's logger
+    app.logger.addHandler(handler)
+
+    # Log an initial message to confirm the setup
+    app.logger.info('App started and logging is configured.')
+
 
 
 # Admin Setup (Runs Once)
