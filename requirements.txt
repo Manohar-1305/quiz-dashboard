@@ -1,13 +1,13 @@
-Flask==2.2.3                # The Flask framework for web development
-Flask-SQLAlchemy==2.5.1      # SQLAlchemy extension for Flask (for database integration)
-Flask-WTF==1.0.1             # Flask extension for forms and CSRF protection
-pytube==12.1.0               # YouTube video downloader library
-gunicorn==20.1.0             # WSGI HTTP Server for production deployment
-requests==2.28.2             # HTTP library for making requests (could be useful for other APIs)
-python-dotenv==0.21.1        # For loading environment variables from a .env file (optional, if you're using env vars)
-Flask-Cors==3.1.1            # Cross-Origin Resource Sharing support for handling cross-origin requests
-Flask-Login==0.6.1           # User session management for authentication
-Flask-Migrate==4.0.0         # Database migrations for SQLAlchemy
-Flask-Bcrypt==1.0.1          # For password hashing and security
-psycopg2-binary==2.9.6       # PostgreSQL adapter for Python (if using PostgreSQL)
-mysqlclient==2.1.0           # MySQL client for Python (if using MySQL)
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+pytube
+gunicorn
+requests
+python-dotenv
+Flask-Cors
+Flask-Login
+Flask-Migrate
+Flask-Bcrypt
+psycopg2-binary
+mysqlclient
