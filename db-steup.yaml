@@ -1,0 +1,74 @@
+---
+- name: Install and Configure MySQL Server
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Install MySQL Server
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Secure MySQL Installation (Disable root remote login, remove test DB)
+      command: mysql_secure_installation
+      ignore_errors: yes
+
+    - name: Allow remote connections to MySQL
+      replace:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address\s*=.*'
+        replace: 'bind-address = 0.0.0.0'
+
+    - name: Restart MySQL service
+      systemd:
+        name: mysql
+        state: restarted
+        enabled: yes
+
+    - name: Verify MySQL is running
+      command: systemctl status mysql
+      register: mysql_status
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Create MySQL Database
+      mysql_db:
+        name: quizdb
+        state: present
+
+    - name: Create MySQL User
+      mysql_user:
+        name: quiz_user
+        password: "password"
+        host: "%"
+        priv: "quizdb.*:ALL"
+        state: present
+
+    - name: Flush Privileges
+      mysql_query:
+        login_user: root
+        login_password: ""
+        query: "FLUSH PRIVILEGES;"
+
+    - name: Create user table in quizdb
+      mysql_query:
+        login_user: root
+        login_password: ""
+        query: |
+          USE quizdb;
+          CREATE TABLE IF NOT EXISTS user (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              username VARCHAR(255) NOT NULL,
+              password VARCHAR(512) NOT NULL,
+              is_admin TINYINT(1) NOT NULL
+          );
+
+    - name: Ensure password column size is 512
+      mysql_query:
+        login_user: root
+        login_password: ""
+        query: "ALTER TABLE user MODIFY COLUMN password VARCHAR(512);"
