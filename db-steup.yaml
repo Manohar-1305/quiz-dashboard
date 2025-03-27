@@ -1,74 +1,53 @@
 ---
-- name: Install and Configure MySQL Server
-  hosts: all
+- name: Execute MySQL Setup Commands
+  hosts: localhost
   become: yes
-  tasks:
 
-    - name: Update package lists
-      apt:
-        update_cache: yes
+  tasks:
+    - name: Update apt package list
+      command: sudo apt-get update -y
+
+    - name: Install Python3-Pip
+      command: sudo apt-get install -y python3-pip
+
+    - name: Install PyMySQL
+      command: pip3 install PyMySQL
+
+    - name: Update package list again
+      command: sudo apt update -y
 
     - name: Install MySQL Server
-      apt:
-        name: mysql-server
-        state: present
+      command: sudo apt install mysql-server -y
 
-    - name: Secure MySQL Installation (Disable root remote login, remove test DB)
-      command: mysql_secure_installation
-      ignore_errors: yes
+    - name: Start and Enable MySQL Service
+      command: sudo systemctl enable --now mysql
 
-    - name: Allow remote connections to MySQL
-      replace:
-        path: /etc/mysql/mysql.conf.d/mysqld.cnf
-        regexp: '^bind-address\s*=.*'
-        replace: 'bind-address = 0.0.0.0'
+    - name: Modify MySQL Configuration
+      command: sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 
-    - name: Restart MySQL service
-      systemd:
-        name: mysql
-        state: restarted
-        enabled: yes
+    - name: Verify Bind Address Change
+      command: grep 'bind-address' /etc/mysql/mysql.conf.d/mysqld.cnf
 
-    - name: Verify MySQL is running
+    - name: Restart MySQL Service
+      command: sudo systemctl restart mysql
+
+    - name: Enable MySQL on Boot
+      command: sudo systemctl enable mysql
+
+    - name: Check MySQL Status
       command: systemctl status mysql
-      register: mysql_status
-      changed_when: false
-      ignore_errors: yes
 
     - name: Create MySQL Database
-      mysql_db:
-        name: quizdb
-        state: present
+      command: sudo mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS quizdb;"
 
-    - name: Create MySQL User
-      mysql_user:
-        name: quiz_user
-        password: "password"
-        host: "%"
-        priv: "quizdb.*:ALL"
-        state: present
+    - name: Create MySQL User and Grant Privileges
+      command: sudo mysql -u root -p -e "CREATE USER 'quiz_user'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON quizdb.* TO 'quiz_user'@'%'; FLUSH PRIVILEGES;"
 
-    - name: Flush Privileges
-      mysql_query:
-        login_user: root
-        login_password: ""
-        query: "FLUSH PRIVILEGES;"
+    - name: Verify Database
+      command: sudo mysql -u root -p -e "SHOW DATABASES;"
 
-    - name: Create user table in quizdb
-      mysql_query:
-        login_user: root
-        login_password: ""
-        query: |
-          USE quizdb;
-          CREATE TABLE IF NOT EXISTS user (
-              id INT AUTO_INCREMENT PRIMARY KEY,
-              username VARCHAR(255) NOT NULL,
-              password VARCHAR(512) NOT NULL,
-              is_admin TINYINT(1) NOT NULL
-          );
+    - name: Create `user` Table in `quizdb`
+      command: sudo mysql -u root -p quizdb -e "CREATE TABLE user (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(512) NOT NULL, is_admin TINYINT(1) NOT NULL);"
 
-    - name: Ensure password column size is 512
-      mysql_query:
-        login_user: root
-        login_password: ""
-        query: "ALTER TABLE user MODIFY COLUMN password VARCHAR(512);"
+    - name: Modify `password` Column in `user` Table
+      command: sudo mysql -u root -p quizdb -e "ALTER TABLE user MODIFY COLUMN password VARCHAR(512);"
