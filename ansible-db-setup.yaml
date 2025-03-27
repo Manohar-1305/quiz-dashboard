@@ -1,0 +1,58 @@
+---
+- name: Execute MySQL Setup Commands
+  hosts: localhost
+  become: yes
+  vars:
+    mysql_root_password: "your_root_password"
+    mysql_user: "quiz_user"
+    mysql_user_password: "password"
+    mysql_database: "quizdb"
+
+  tasks:
+    - name: Update apt package list
+      command: sudo apt-get update -y
+
+    - name: Install Python3-Pip
+      command: sudo apt-get install -y python3-pip
+
+    - name: Install PyMySQL
+      command: pip3 install PyMySQL
+
+    - name: Update package list again
+      command: sudo apt update -y
+
+    - name: Install MySQL Server
+      command: sudo apt install mysql-server -y
+
+    - name: Start and Enable MySQL Service
+      command: sudo systemctl enable --now mysql
+
+    - name: Modify MySQL Configuration
+      command: sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+    - name: Verify Bind Address Change
+      command: grep 'bind-address' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+    - name: Restart MySQL Service
+      command: sudo systemctl restart mysql
+
+    - name: Enable MySQL on Boot
+      command: sudo systemctl enable mysql
+
+    - name: Check MySQL Status
+      command: systemctl status mysql
+
+    - name: Create MySQL Database
+      command: sudo mysql -u root -p'{{ mysql_root_password }}' -e "CREATE DATABASE IF NOT EXISTS quizdb;"
+
+    - name: Create MySQL User and Grant Privileges
+      command: sudo mysql -u root -p'{{ mysql_root_password }}' -e "CREATE USER 'quiz_user'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON quizdb.* TO 'quiz_user'@'%'; FLUSH PRIVILEGES;"
+
+    - name: Verify Database
+      command: sudo mysql -u root -p'{{ mysql_root_password }}' -e "SHOW DATABASES;"
+
+    - name: Create `user` Table in `quizdb`
+      command: sudo mysql -u root -p'{{ mysql_root_password }}' quizdb -e "CREATE TABLE user (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(512) NOT NULL, is_admin TINYINT(1) NOT NULL);"
+
+    - name: Modify `password` Column in `user` Table
+      command: sudo mysql -u root -p'{{ mysql_root_password }}' quizdb -e "ALTER TABLE user MODIFY COLUMN password VARCHAR(512);"
