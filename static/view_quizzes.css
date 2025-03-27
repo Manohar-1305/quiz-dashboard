@@ -1,0 +1,154 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0e0e0, #3a3a3a);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+    width: 600px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Top Buttons */
+.top-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+/* Button Hover Effects */
+.create-quiz-btn {
+    background: linear-gradient(135deg, #4CAF50, #2e8b57);
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 128, 0, 0.3);
+}
+
+.create-quiz-btn:hover {
+    background: linear-gradient(135deg, #2e8b57, #4CAF50);
+    transform: translateY(-2px);
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    transform: translateY(-2px);
+}
+
+/* Heading */
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* Quiz List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    color: rgb(10, 10, 10);
+    transition: transform 0.3s ease-in-out;
+}
+
+li:hover {
+    transform: scale(1.03);
+}
+
+/* Delete Button */
+.delete-btn {
+    background: linear-gradient(135deg, #ff4b5c, #d63031);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #d63031, #ff4b5c);
+    transform: translateY(-2px);
+}
+
+/* Back to Dashboard Button */
+.dashboard-container .btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: rgb(11, 10, 10);
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 162, 255, 0.3);
+}
+
+.dashboard-container .btn:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.logout-btn {
+    background: #e74c3c !important; /* Strong red */
+    color: white !important;
+    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.3) !important;
+    border: none !important;
+}
+
+.logout-btn:hover {
+    background: #c0392b !important;
+    transform: translateY(-2px) !important;
+}
+

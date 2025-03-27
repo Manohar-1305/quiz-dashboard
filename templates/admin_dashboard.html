@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Admin Dashboard</h2>
+
+        <div class="buttons">
+            <a href="{{ url_for('create_quiz') }}" class="btn">Create New Quiz</a>
+            <a href="{{ url_for('view_quizzes') }}" class="btn">View Created Quizzes</a>
+        </div>
+
+        <h3>All Users' Scores</h3>
+        <ul>
+            {% for score in scores %}
+                <li>User: {{ score.user.username }} - Score: {{ score.score }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+</body>
+</html>
+

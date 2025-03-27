@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Attempts</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Your Quiz Attempts</h1>
+        
+        {% if attempts %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-4 bg-indigo-600">
+                <h2 class="text-xl font-semibold text-white">Quiz Attempts History</h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                {% for attempt in attempts %}
+                <div class="p-4 hover:bg-gray-50">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900">{{ attempt.quiz.question }}</h3>
+                            <p class="text-sm text-gray-500 mt-1">Topic: {{ attempt.quiz.topic.name }}</p>
+                        </div>
+                        <div class="ml-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                                {{ attempt.attempt_count }} {% if attempt.attempt_count == 1 %}attempt{% else %}attempts{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center p-8 bg-gray-50 rounded-lg">
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            <p class="text-gray-600">No quiz attempts yet</p>
+        </div>
+        {% endif %}
+        
+        <div class="mt-4">
+            <a href="{{ url_for('user_dashboard') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

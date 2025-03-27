@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Quiz</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user_dashboard.css') }}">
+</head>
+<body>
+    <h2>Welcome, {{ current_user.username }}</h2>
+    
+    <h3>Select a Topic</h3>
+    <form method="GET" action="{{ url_for('user_dashboard') }}">
+        <label for="topic">Choose a topic:</label>
+        <select name="topic" id="topic" required>
+            <option value="" disabled {% if not selected_topic %}selected{% endif %}>Select a topic</option>
+            {% for topic in topics %}
+                <option value="{{ topic }}" {% if selected_topic == topic %}selected{% endif %}>{{ topic }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Load Quiz</button>
+    </form>
+
+    {% if selected_topic %}
+        <h3>Quiz on "{{ selected_topic }}"</h3>
+
+        {% if quizzes %}
+            <form method="POST" action="{{ url_for('submit_quiz') }}">
+                {% for quiz in quizzes %}
+                <fieldset>
+                    <legend>{{ quiz.question }}</legend>
+                
+                    <div class="option-container">
+                        <input type="radio" name="{{ quiz.id }}" value="{{ quiz.option1 }}" id="opt1-{{ quiz.id }}" required>
+                        <label for="opt1-{{ quiz.id }}">{{ quiz.option1 }}</label>
+                    </div>
+                
+                    <div class="option-container">
+                        <input type="radio" name="{{ quiz.id }}" value="{{ quiz.option2 }}" id="opt2-{{ quiz.id }}">
+                        <label for="opt2-{{ quiz.id }}">{{ quiz.option2 }}</label>
+                    </div>
+                
+                    <div class="option-container">
+                        <input type="radio" name="{{ quiz.id }}" value="{{ quiz.option3 }}" id="opt3-{{ quiz.id }}">
+                        <label for="opt3-{{ quiz.id }}">{{ quiz.option3 }}</label>
+                    </div>
+                
+                    <div class="option-container">
+                        <input type="radio" name="{{ quiz.id }}" value="{{ quiz.option4 }}" id="opt4-{{ quiz.id }}">
+                        <label for="opt4-{{ quiz.id }}">{{ quiz.option4 }}</label>
+                    </div>
+
+                    <!-- Display attempts count for the current quiz -->
+                    {% set attempt = quiz.quiz_attempts | selectattr('user_id', 'equalto', current_user.id) | list | first %}
+                    {% if attempt %}
+                        <p>Attempts: {{ attempt.attempt_count }}</p>
+                    {% else %}
+                        <p>Attempts: 0</p>
+                    {% endif %}
+                </fieldset>
+                <br>
+                {% endfor %}
+                <button type="submit">Submit Quiz</button>
+            </form>
+        {% else %}
+            <p>No quizzes available for this topic.</p>
+        {% endif %}
+    {% endif %}
+
+    <h3>Your Score: {{ score if score is not none else 'Not Attempted Yet' }}</h3>
+    
+    <h3>Total Quiz Attempts: {{ attempts_count }}</h3>
+
+    <br>
+    <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+    <footer>
+        <p>© 2025 Your Quiz Application. All rights reserved.</p>
+    </footer>
+</body>
+</html>

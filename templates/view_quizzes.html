@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Quizzes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_quizzes.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="top-buttons">
+            <a href="{{ url_for('create_quiz') }}" class="btn create-quiz-btn">Create Quiz</a>
+            <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+        </div>
+
+        <h2>All Created Quizzes</h2>
+
+        {% if quizzes %}
+            <ul>
+                {% for quiz in quizzes %}
+                    <li>
+                        <strong>Question:</strong> {{ quiz.question }} <br>
+                        <strong>Options:</strong> {{ quiz.option1 }}, {{ quiz.option2 }}, {{ quiz.option3 }}, {{ quiz.option4 }} <br>
+                        <strong>Correct Answer:</strong> {{ quiz.correct_answer }} <br>
+
+                        <!-- Delete button -->
+                        <form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No quizzes created yet.</p>
+        {% endif %}
+
+        <a href="{{ url_for('admin_dashboard') }}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

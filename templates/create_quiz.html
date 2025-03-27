@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Create a Quiz</h2>
+        <form method="POST">
+            <!-- Create Topic field -->
+            <input type="text" name="new_topic" placeholder="Enter a new topic" id="new-topic">
+
+            <!-- Existing topics dropdown -->
+            <select name="topic" id="topic-select">
+                <option value="">Select Topic</option>
+                {% for topic in topics %}
+                    <option value="{{ topic.id }}">{{ topic.name }}</option>
+                {% endfor %}
+            </select>
+
+            <br><br>
+            <input type="text" name="question" placeholder="Enter your question" required>
+            
+            <div class="options">
+                <input type="text" name="option1" placeholder="Option 1" required>
+                <input type="text" name="option2" placeholder="Option 2" required>
+                <input type="text" name="option3" placeholder="Option 3" required>
+                <input type="text" name="option4" placeholder="Option 4" required>
+            </div>
+
+            <input type="text" name="correct_answer" placeholder="Correct Answer" required>
+            
+            <!-- Save Quiz Button -->
+            <button type="submit">Save Quiz</button>
+        </form>
+        <a class="back-button" href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+
+    </div>
+</body>
+</html>

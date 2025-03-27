@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Quiz Container */
+.quiz-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  width: 420px;
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title */
+.quiz-container h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Input Fields */
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #764ba2;
+  box-shadow: 0px 0px 8px rgba(118, 75, 162, 0.3);
+}
+
+/* Options */
+.options {
+  display: grid;
+  gap: 12px;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #ff758c, #ff7eb3);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #ff7eb3, #ff758c);
+  transform: scale(1.05);
+}
+
+/* Back Button */
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #ff758c;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.back-button:hover {
+  color: #ff7eb3;
+  text-decoration: underline;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
