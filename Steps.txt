@@ -13,6 +13,13 @@ sudo apt update -y
 sudo apt install -y pkg-config libmysqlclient-dev
 pip install -r /root/app/quiz-dashboard/requirements.txt
 source /root/quiz-dashboard/venv/bin/activate
+vi /etc/systemd/system/quiz-dashboard.service
+systemctl daemon-reload
+systemctl enable quiz-dashboard
+systemctl start quiz-dashboard
+systemctl status quiz-dashboard
+
+
 pip install flask
 
 sudo apt install pkg-config libmysqlclient-dev
