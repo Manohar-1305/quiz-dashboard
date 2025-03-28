@@ -1,17 +1,22 @@
-sudo apt update -y
-
-sudo apt install python3-pip -y
-python3 -m venv venv
-apt install python3.10-venv -y
+sudo DEBIAN_FRONTEND=sudo apt update -y
+sudo DEBIAN_FRONTEND=sudo apt install python3-pip -y
+sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10-venv
 mkdir -p /root/app
 cd /root/app
-sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10-venv
 python3 -m venv venv
 source venv/bin/activate
-
-sudo apt update -y
-sudo apt install -y pkg-config libmysqlclient-dev
+sudo DEBIAN_FRONTEND==sudo apt update -y
+sudo DEBIAN_FRONTEND=sudo apt install -y pkg-config libmysqlclient-dev
 pip install -r /root/app/quiz-dashboard/requirements.txt
+
+
+python3 -m venv venv
+apt install python3.10-venv -y
+
+
+
+
+
 source /root/quiz-dashboard/venv/bin/activate
 vi /etc/systemd/system/quiz-dashboard.service
 systemctl daemon-reload
