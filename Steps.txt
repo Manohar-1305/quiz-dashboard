@@ -9,6 +9,8 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10-venv
 python3 -m venv venv
 source venv/bin/activate
 
+sudo apt update -y
+sudo apt install -y pkg-config libmysqlclient-dev
 pip install -r /root/app/quiz-dashboard/requirements.txt
 source /root/quiz-dashboard/venv/bin/activate
 pip install flask
