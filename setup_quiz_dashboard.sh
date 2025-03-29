@@ -31,7 +31,7 @@ log_message "Changed directory to /root/quiz-dashboard"
 
 # Create Python virtual environment
 log_message "Installing python3.10-venv..."
-sudo apt install -y python3.10-venv && log_message "python3.10-venv installed successfully" || log_message "python3.10-venv installatio        n failed"
+sudo apt install -y python3.10-venv && log_message "python3.10-venv installed successfully" || log_message "python3.10-venv installation failed"
 
 log_message "Creating virtual environment..."
 python3 -m venv venv && log_message "Virtual environment created successfully" || log_message "Virtual environment creation failed"
@@ -41,20 +41,34 @@ log_message "Activating virtual environment..."
 source venv/bin/activate && log_message "Virtual environment activated" || log_message "Virtual environment activation failed"
 
 # Install additional dependencies
+log_message "Installing pkg-config and libmysqlclient-dev..."
+sudo apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
 
-log_message "Installing pkg-config"
-sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message         "Dependency installation failed"
-# Clone the repository
-log_message "Cloning repository from GitHub..."
-git clone https://github.com/Manohar-1305/quiz-dashboard.git && log_message "Repository cloned successfully" || log_message "Repository         cloning failed"
+# Export MySQL flags
+export MYSQLCLIENT_CFLAGS="$(pkg-config --cflags mysqlclient)"
+export MYSQLCLIENT_LDFLAGS="$(pkg-config --libs mysqlclient)"
+
+# Clone the repository only if it doesn't already exist
+if [ ! -d "/root/quiz-dashboard/.git" ]; then
+    log_message "Cloning repository from GitHub..."
+    git clone https://github.com/Manohar-1305/quiz-dashboard.git && log_message "Repository cloned successfully" || log_message "Repository cloning failed"
+else
+    log_message "Repository already exists, skipping cloning."
+fi
 
 # Change to the cloned directory
 cd quiz-dashboard
-log_message "Changed directory to Quiz-portal"
+log_message "Changed directory to quiz-dashboard"
 
 # Install Python dependencies
 log_message "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
+
+# Ensure log directory exists
+mkdir -p /root/quiz-dashboard/
+touch /root/quiz-dashboard//app.log
+chown root:root /root/quiz-dashboard/app.log
+chmod 666 /root/quiz-dashboard/app.log
 
 # Create systemd service for Flask app
 log_message "Creating systemd service for Flask app..."
@@ -73,10 +87,6 @@ ExecStart=/root/quiz-dashboard/venv/bin/python3 /root/quiz-dashboard/app.py
 [Install]
 WantedBy=multi-user.target
 EOF' && log_message "Systemd service created successfully" || log_message "Service creation failed"
-
-sudo touch /root/quiz-dashboard/Quiz-portal/app.log
-sudo chown root:root /root/quiz-dashboard/Quiz-portal/app.log
-sudo chmod 666 /root/quiz-dashboard/Quiz-portal/app.log
 
 # Reload systemd and enable the service
 log_message "Reloading systemd and enabling Flask app service..."
