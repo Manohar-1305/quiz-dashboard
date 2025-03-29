@@ -1,7 +1,6 @@
 ============================================================
 sudo apt update -y
 sudo apt install mysql-server -y
-sudo mysql_secure_installation
 sudo cat /etc/mysql/mysql.conf.d/mysqld.cnf
 sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 grep 'bind-address' /etc/mysql/mysql.conf.d/mysqld.cnf
