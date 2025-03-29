@@ -41,8 +41,6 @@ log_message "Activating virtual environment..."
 source venv/bin/activate && log_message "Virtual environment activated" || log_message "Virtual environment activation failed"
 
 # Install additional dependencies
-log_message "Installing pkg-config"
-sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
 
 log_message "Installing pkg-config"
 sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message         "Dependency installation failed"
