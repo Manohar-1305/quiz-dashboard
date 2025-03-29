@@ -70,7 +70,7 @@ User=root
 Group=root
 WorkingDirectory=/root/quiz-dashboard/Quiz-portal
 Environment="PATH=/root/quiz-dashboard/venv/bin"
-ExecStart=/root/quiz-dashboard/venv/bin/python3 /root/quiz-dashboard/Quiz-portal/app.py
+ExecStart=/root/quiz-dashboard/venv/bin/python3 /root/quiz-dashboard/app.py
 
 [Install]
 WantedBy=multi-user.target
