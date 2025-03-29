@@ -21,10 +21,6 @@ sudo apt update -y && log_message "System update completed successfully" || log_
 log_message "Installing python3-pip..."
 sudo apt install python3-pip -y && log_message "python3-pip installed successfully" || log_message "python3-pip installation failed"
 
-# Install additional dependencies
-log_message "Installing pkg-config, libmysqlclient-dev, and pymysql..."
-sudo DEBIAN_FRONTEND=noninteractive apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
-
 # Create app directory
 log_message "Creating application directory..."
 mkdir -p /root/quiz-dashboard && log_message "Application directory created" || log_message "Directory creation failed"
@@ -44,6 +40,10 @@ python3 -m venv venv && log_message "Virtual environment created successfully" |
 log_message "Activating virtual environment..."
 source venv/bin/activate && log_message "Virtual environment activated" || log_message "Virtual environment activation failed"
 
+# Install additional dependencies
+log_message "Installing pkg-config, libmysqlclient-dev..."
+sudo DEBIAN_FRONTEND=noninteractive apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
+
 # Clone the repository
 log_message "Cloning repository from GitHub..."
 git clone https://github.com/Manohar-1305/Quiz-portal.git && log_message "Repository cloned successfully" || log_message "Repository cloning failed"
@@ -55,13 +55,6 @@ log_message "Changed directory to Quiz-portal"
 # Install Python dependencies
 log_message "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
-
-# Install PyMySQL instead of MySQLdb
-log_message "Installing PyMySQL..."
-pip install PyMySQL && log_message "PyMySQL installed successfully" || log_message "PyMySQL installation failed"
-
-# Modify the Flask app to use PyMySQL instead of MySQLdb
-sed -i "s/MySQLdb/PyMySQL/g" /root/quiz-dashboard/Quiz-portal/app.py
 
 # Create systemd service for Flask app
 log_message "Creating systemd service for Flask app..."
