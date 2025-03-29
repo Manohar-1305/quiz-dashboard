@@ -44,6 +44,8 @@ source venv/bin/activate && log_message "Virtual environment activated" || log_m
 log_message "Installing pkg-config, libmysqlclient-dev..."
 sudo DEBIAN_FRONTEND=noninteractive apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
 
+log_message "Installing pkg-config"
+sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
 # Clone the repository
 log_message "Cloning repository from GitHub..."
 git clone https://github.com/Manohar-1305/Quiz-portal.git && log_message "Repository cloned successfully" || log_message "Repository cloning failed"
