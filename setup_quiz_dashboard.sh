@@ -29,4 +29,16 @@ git clone https://github.com/Manohar-1305/quiz-dashboard.git
 echo "Installing Python dependencies..."
 pip install -r /root/app/quiz-dashboard/requirements.txt
 
+# Reload systemd, enable, and start the service
+echo "Reloading systemd and starting the service..."
+sudo systemctl daemon-reload
+sudo systemctl enable quiz-dashboard
+sudo systemctl restart quiz-dashboard
+
+# Check service status
+echo "Checking service status..."
+if ! sudo systemctl status quiz-dashboard --no-pager; then
+    echo "Service failed. Checking logs..."
+    journalctl -u quiz-dashboard --no-pager --since "10 minutes ago"
+fi
 echo "Setup completed at $(date)"
