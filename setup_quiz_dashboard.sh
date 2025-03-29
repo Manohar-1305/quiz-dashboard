@@ -51,7 +51,7 @@ log_message "Cloning repository from GitHub..."
 git clone https://github.com/Manohar-1305/Quiz-portal.git && log_message "Repository cloned successfully" || log_message "Repository cloning failed"
 
 # Change to the cloned directory
-cd Quiz-portal
+cd quiz-dashboard
 log_message "Changed directory to Quiz-portal"
 
 # Install Python dependencies
