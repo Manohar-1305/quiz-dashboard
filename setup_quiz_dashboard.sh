@@ -31,7 +31,7 @@ log_message "Changed directory to /root/quiz-dashboard"
 
 # Create Python virtual environment
 log_message "Installing python3.10-venv..."
-sudo apt install -y python3.10-venv && log_message "python3.10-venv installed successfully" || log_message "python3.10-venv installation failed"
+sudo apt install -y python3.10-venv && log_message "python3.10-venv installed successfully" || log_message "python3.10-venv installatio        n failed"
 
 log_message "Creating virtual environment..."
 python3 -m venv venv && log_message "Virtual environment created successfully" || log_message "Virtual environment creation failed"
@@ -42,13 +42,13 @@ source venv/bin/activate && log_message "Virtual environment activated" || log_m
 
 # Install additional dependencies
 log_message "Installing pkg-config, libmysqlclient-dev..."
-sudo DEBIAN_FRONTEND=noninteractive apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
+sudo DEBIAN_FRONTEND=noninteractive apt install -y pkg-config libmysqlclient-dev && log_message "Dependencies installed successfully" |        | log_message "Dependency installation failed"
 
 log_message "Installing pkg-config"
-sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message "Dependency installation failed"
+sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev  && log_message "Dependencies installed successfully" || log_message         "Dependency installation failed"
 # Clone the repository
 log_message "Cloning repository from GitHub..."
-git clone https://github.com/Manohar-1305/Quiz-portal.git && log_message "Repository cloned successfully" || log_message "Repository cloning failed"
+git clone https://github.com/Manohar-1305/quiz-dashboard.git && log_message "Repository cloned successfully" || log_message "Repository         cloning failed"
 
 # Change to the cloned directory
 cd quiz-dashboard
