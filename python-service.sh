@@ -1,12 +1,13 @@
 [Unit]
-Description=Quiz Dashboard Service
+Description=flask app
 After=network.target
 
 [Service]
 User=root
-WorkingDirectory=/root/app/quiz-dashboard
-ExecStart=/root/app/quiz-dashboard/venv/bin/python /root/app/quiz-dashboard/app.py
-Restart=always
+Group=root
+WorkingDirectory=/root/quiz-dashboard/Quiz-portal
+Environment="PATH=/root/quiz-dashboard/venv/bin"
+ExecStart=/root/quiz-dashboard/venv/bin/python3 /root/quiz-dashboard/app.py
 
 [Install]
 WantedBy=multi-user.target
