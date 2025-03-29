@@ -15,9 +15,9 @@ git clone https://github.com/Manohar-1305/quiz-dashboard.git
 source /root/quiz-dashboard/venv/bin/activate
 vi /etc/systemd/system/quiz-dashboard.service
 systemctl daemon-reload
-systemctl enable quiz-dashboard
-systemctl start quiz-dashboard
-systemctl status quiz-dashboard
+systemctl restart flaskapp.service
+systemctl status flaskapp.service
+
 
 
 python3 -m venv venv
