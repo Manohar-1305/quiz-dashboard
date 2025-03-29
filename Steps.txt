@@ -6,7 +6,7 @@ cd /root/app
 python3 -m venv venv
 source venv/bin/activate
 sudo DEBIAN_FRONTEND==sudo apt update -y
-sudo DEBIAN_FRONTEND=sudo apt install -y pkg-config libmysqlclient-dev
+sudo DEBIAN_FRONTEND=apt install -y pkg-config libmysqlclient-dev
 pip install -r /root/app/quiz-dashboard/requirements.txt
 git clone https://github.com/Manohar-1305/quiz-dashboard.git
 
