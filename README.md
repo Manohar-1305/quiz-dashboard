@@ -1,1 +1,1 @@
-![Alt text]([http://full/path/to/](https://github.com/Manohar-1305/quiz-dashboard/tree/main/static/"quiz.jpg")
+![Alt text](https://raw.githubusercontent.com/Manohar-1305/quiz-dashboard/main/static/quiz.jpg)
