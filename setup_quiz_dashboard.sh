@@ -66,7 +66,7 @@ pip install -r requirements.txt && log_message "Dependencies installed successfu
 
 # Ensure log directory exists
 mkdir -p /root/quiz-dashboard/
-touch /root/quiz-dashboard//app.log
+touch /root/quiz-dashboard/app.log
 chown root:root /root/quiz-dashboard/app.log
 chmod 666 /root/quiz-dashboard/app.log
 
